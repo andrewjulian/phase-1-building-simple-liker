@@ -13,15 +13,29 @@ const heartButtons = document.querySelectorAll('.like-glyph')
 heartButtons.forEach(heartButton => heartButton.addEventListener('click', () => 
   {
     console.log("Click is working!")
-    fetch(mimicServerCall())
-    //.then(heartButton.hasClass('activated-heart') ? heartButton.classList.remove('activated-heart') : heartButton.classList.add('activated-heart'))
-    .then(console.log("good!"))
-    .catch(error => document.querySelector('#modal').classList.remove("hidden"))
+
+    mimicServerCall()
+    .then(() => {
+      console.log("then statement!")
+      const likeButton = document.querySelector('.like-glyph')
+      console.log()
+      return likeButton.textContent == EMPTY_HEART ? likeButton.textContent = FULL_HEART : likeButton.textContent = EMPTY_HEART
+      
+    })
+    .catch(error => {
+      const modalHeader = document.querySelector('#modal')
+      setTimeout(() => {
+        console.log("modal hidden running")
+        return modalHeader.classList.add('hidden')
+      }, 5000)
+      console.log(error)
+      modalHeader.classList.remove("hidden")
+      const headerErrorMessage = document.querySelector('#modal-message')
+      headerErrorMessage.textContent = error
+      
+    })
+
   }))
-
-
-
-
 
 
 //------------------------------------------------------------------------------
